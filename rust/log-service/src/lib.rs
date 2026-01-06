@@ -3800,6 +3800,7 @@ mod tests {
                     .collect::<Result<_, _>>()
                     .expect("Logs should be valid"),
                 cmek: None,
+                database_name: "test_db".to_string(),
             });
             if let Err(err) = server.push_logs(proto_push_log_req).await {
                 if err.code() == Code::Unavailable {
@@ -3837,6 +3838,7 @@ mod tests {
                 start_from_offset: read_offset as i64,
                 batch_size: batch_size as i32,
                 end_timestamp: i64::MAX,
+                database_name: "test_db".to_string(),
             }))
             .await
             .expect("Pull Logs should not fail")
@@ -3874,6 +3876,7 @@ mod tests {
         server
             .scout_logs(Request::new(ScoutLogsRequest {
                 collection_id: collection_id.to_string(),
+                database_name: "test_db".to_string(),
             }))
             .await
             .expect("Scout Logs should not fail")
@@ -3893,6 +3896,7 @@ mod tests {
                 .update_collection_log_offset(Request::new(UpdateCollectionLogOffsetRequest {
                     collection_id: collection_id.to_string(),
                     log_offset: compact_offset,
+                    database_name: "test_db".to_string(),
                 }))
                 .await
             {
@@ -3973,6 +3977,7 @@ mod tests {
                 .garbage_collect_phase2(
                     GarbageCollectPhase2Request {
                         log_to_collect: Some(LogToCollect::CollectionId(collection_id.to_string())),
+                        database_name: "test_db".to_string(),
                     }
                     .into_request(),
                 )
@@ -4080,6 +4085,7 @@ mod tests {
                 .fork_logs(Request::new(ForkLogsRequest {
                     source_collection_id: source_collection_id.to_string(),
                     target_collection_id: fork_collection_id.to_string(),
+                    database_name: "test_db".to_string(),
                 }))
                 .await
                 .expect("Fork Logs should not fail");
@@ -4225,6 +4231,7 @@ mod tests {
                 start_from_offset: 7,
                 batch_size: 36,
                 end_timestamp: i64::MAX,
+                database_name: "test_db".to_string(),
             }))
             .await
             .expect("Pull Logs should not fail")
@@ -4387,6 +4394,7 @@ mod tests {
         let initial_request = UpdateCollectionLogOffsetRequest {
             collection_id: collection_id_str.clone(),
             log_offset: 100,
+            database_name: "test_db".to_string(),
         };
 
         let response = log_server
@@ -4402,6 +4410,7 @@ mod tests {
         let forward_request = UpdateCollectionLogOffsetRequest {
             collection_id: collection_id_str.clone(),
             log_offset: 150,
+            database_name: "test_db".to_string(),
         };
 
         let response = log_server
@@ -4413,6 +4422,7 @@ mod tests {
         let backward_request = UpdateCollectionLogOffsetRequest {
             collection_id: collection_id_str.clone(),
             log_offset: 50,
+            database_name: "test_db".to_string(),
         };
 
         let response = log_server
@@ -4430,6 +4440,7 @@ mod tests {
         let same_request = UpdateCollectionLogOffsetRequest {
             collection_id: collection_id_str.clone(),
             log_offset: 150, // Same as current
+            database_name: "test_db".to_string(),
         };
 
         let response = log_server
@@ -4441,6 +4452,7 @@ mod tests {
         let final_forward_request = UpdateCollectionLogOffsetRequest {
             collection_id: collection_id_str,
             log_offset: 200,
+            database_name: "test_db".to_string(),
         };
 
         let response = log_server
