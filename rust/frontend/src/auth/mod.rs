@@ -40,6 +40,7 @@ pub enum AuthzAction {
     Search,
     CreateAttachedFunction,
     RemoveAttachedFunction,
+    GetIndexingStatus,
 }
 
 impl Display for AuthzAction {

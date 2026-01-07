@@ -1819,7 +1819,7 @@ async fn indexing_status(
     let requester_identity = server
         .authenticate_and_authorize_collection(
             &headers,
-            AuthzAction::GetCollection,
+            AuthzAction::GetIndexingStatus,
             AuthzResource {
                 tenant: Some(tenant.clone()),
                 database: Some(database.clone()),
